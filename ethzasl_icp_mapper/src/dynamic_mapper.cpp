@@ -492,12 +492,14 @@ void Mapper::processCloud(unique_ptr<DP> newPointCloud, const std::string& scann
                                                 << ros::Time::now()
                                                     - stamp << endl
                                                 << e.what());
-        return;
+        //return;
+        T_odom_to_map = PM::TransformationParameters::Identity(dimp1, dimp1);
       }
       catch (...) {
         // everything else
         ROS_ERROR_STREAM("Unexpected exception... ignoring scan D");
-        return;
+        //return;
+        T_odom_to_map = PM::TransformationParameters::Identity(dimp1, dimp1);
       }
 //		T_odom_to_map = PM::TransformationParameters::Identity(dimp1, dimp1);
 		T_localMap_to_map = PM::TransformationParameters::Identity(dimp1, dimp1);
@@ -571,7 +573,7 @@ void Mapper::processCloud(unique_ptr<DP> newPointCloud, const std::string& scann
         ROS_INFO_STREAM(
             "Corrected scan publishing " << pc.getNbPoints() << " points");
         scanPub.publish(PointMatcher_ros::pointMatcherCloudToRosMsg<float>(pc,
-                                                                           tfMapFrame,
+                                                                           odomFrame,
                                                                            stamp));
       }
       publishLock.unlock();
@@ -663,7 +665,7 @@ void Mapper::processCloud(unique_ptr<DP> newPointCloud, const std::string& scann
       if (scanPub.getNumSubscribers() && localizing)
       {
         ROS_INFO_STREAM("Corrected scan publishing " << pc.getNbPoints() << " points");
-        scanPub.publish(PointMatcher_ros::pointMatcherCloudToRosMsg<float>(pc, tfMapFrame, stamp));
+        scanPub.publish(PointMatcher_ros::pointMatcherCloudToRosMsg<float>(pc, odomFrame, stamp));
       }
       publishLock.unlock();
 
@@ -759,7 +761,7 @@ void Mapper::setMap(DP* newMapPointCloud)
 	if (mapPub.getNumSubscribers() && mapping)
 	{
 		ROS_INFO_STREAM("[MAP] publishing " << mapPointCloud->getNbPoints() << " points");
-		mapPub.publish(PointMatcher_ros::pointMatcherCloudToRosMsg<float>(*mapPointCloud, tfMapFrame, mapCreationTime));
+		mapPub.publish(PointMatcher_ros::pointMatcherCloudToRosMsg<float>(*mapPointCloud, odomFrame, mapCreationTime));
 	}
 	publishLock.unlock();
 }
