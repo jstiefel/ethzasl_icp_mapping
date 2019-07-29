@@ -2,7 +2,7 @@
 
 <launch>
 
-  <arg name="map_file" default="/home/johnny/.ros/finalMap.pcd" />
+  <arg name="map_file" default="/home/julian/.ros/map.pcd" />
   <arg name="map_frame"    default="map" />
   <arg name="marker_frame" default="marker" />
   <arg name="marker_frame2" default="marker2" />

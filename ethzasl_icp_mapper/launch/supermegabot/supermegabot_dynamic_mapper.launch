@@ -6,7 +6,7 @@ Parameters for Center for robotics summer school 2019
 <launch>
 
 	<node name="mapper" type="dynamic_mapper_node" pkg="ethzasl_icp_mapper" output="screen" >
-		<remap from="cloud_in" to="/rslidar_points" />
+		<remap from="cloud_in" to="/velodyne_points" />
 		<param name="subscribe_scan" value="false"/>
 		<param name="subscribe_map" value="true"/>
 		<param name="icpConfig"
