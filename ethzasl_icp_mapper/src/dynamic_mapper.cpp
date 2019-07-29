@@ -283,9 +283,9 @@ Mapper::Mapper(ros::NodeHandle &n, ros::NodeHandle &pn) :
     cloudSub = n.subscribe("cloud_in", inputQueueSize, &Mapper::gotCloud, this);
   if (getParam<bool>("subscribe_cad", true))
     cadSub = n.subscribe("cad_interface_node/cad_model",
-                         inputQueueSize,
-                         &Mapper::gotCAD,
-                         this);
+			  inputQueueSize,
+			  &Mapper::gotCAD,
+			  this);
 
   mapPub = n.advertise<sensor_msgs::PointCloud2>("point_map", 2, true);
   scanPub = n.advertise<sensor_msgs::PointCloud2>("corrected_scan", 2, true);
@@ -696,9 +696,9 @@ void Mapper::processCloud(unique_ptr<DP> newPointCloud,
   realTimeRatio *= seq - lastPointCloudSeq;
 
   ROS_DEBUG_STREAM("[TIME] Total ICP took: " << t.elapsed() << " [s]");
-  if (realTimeRatio < 80)
+  if (realTimeRatio < 80) 
     ROS_INFO_STREAM("[TIME] Real-time capability: " << realTimeRatio << "%");
-  else
+  else 
     ROS_WARN_STREAM("[TIME] Real-time capability: " << realTimeRatio << "%");
 
   lastPoinCloudTime = stamp;
